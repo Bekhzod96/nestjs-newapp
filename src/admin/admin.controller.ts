@@ -7,34 +7,38 @@ import {
   Put,
   Param,
   Delete,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
-
+import { Response } from 'express';
 import { CreateAdminDto, updateAdminDto } from './dto';
 @Controller('admin')
 export class AdminController {
   @Post()
-  create(@Body() createAdminDto: CreateAdminDto): string {
-    return 'Admin has been created';
+  create(@Body() createAdminDto: CreateAdminDto, @Res() res: Response) {
+    res.status(HttpStatus.CREATED).json([createAdminDto]);
   }
+  // GET localhost:3000/admin?user=Bekhzod
   @Get()
-  index(@Query() query: string): string {
-    return 'Get all admin list';
+  index(@Query() query: string, @Res() res: Response) {
+    res.status(HttpStatus.OK).send(query);
   }
   @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `Get Person Corresponding id: ${id} `;
+  findOne(@Param('id') id: string, @Res() res: Response) {
+    res.status(HttpStatus.OK).json({ id });
   }
 
   @Put(':id')
   update(
     @Param('id') id: string,
     @Body() updateAdminDto: updateAdminDto,
-  ): string {
-    return `This user inofrmation has been updated ${id}`;
+    @Res() res: Response,
+  ) {
+    res.status(HttpStatus.OK).json({ id, ...updateAdminDto });
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): string {
-    return `This user has been removed ${id}`;
+  remove(@Param('id') id: string, @Res() res: Response) {
+    res.status(HttpStatus.OK).json({ id });
   }
 }
