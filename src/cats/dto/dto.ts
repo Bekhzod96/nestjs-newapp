@@ -8,3 +8,9 @@ export class updateCatDto {
   age?: string;
   name?: string;
 }
+
+export class getCatBodyMiddleware {
+  name?: string;
+  age?: string;
+  auth: string;
+}

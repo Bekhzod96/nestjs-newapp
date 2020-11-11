@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CatsService } from './cats.service';
-import { CreateCatDto } from './dto';
-import { Cat } from './cats.interface';
+import { CreateCatDto, getCatBodyMiddleware } from './dto/dto';
+import { Cat } from './interfaces/cats.interface';
 @Controller('cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
@@ -23,7 +23,12 @@ export class CatsController {
     this.catsService.create(createCatDto);
   }
   @Get()
-  async findAll(@Query() query: string): Promise<Cat[]> {
+  async findAll(
+    @Query() query: string,
+    @Body() body: getCatBodyMiddleware,
+  ): Promise<Cat[]> {
+    const bodySting = JSON.stringify(body);
+    console.info('This message added to controller ', bodySting);
     return this.catsService.findAll(query);
   }
 
