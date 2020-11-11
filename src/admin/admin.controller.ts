@@ -11,13 +11,13 @@ import {
   HttpStatus,
   UsePipes,
   UseGuards,
+  SetMetadata,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthGuard } from 'src/common/guards/auth.guard';
 import { CreateAdminDto, updateAdminDto } from './dto';
 import { RolesGuard } from '../common/guards/roles.guard';
 @Controller('admin')
-@UseGuards(AuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 export class AdminController {
   @Post()
   create(@Body() createAdminDto: CreateAdminDto, @Res() res: Response) {
