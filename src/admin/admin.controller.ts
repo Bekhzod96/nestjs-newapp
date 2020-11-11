@@ -10,10 +10,14 @@ import {
   Res,
   HttpStatus,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 import { CreateAdminDto, updateAdminDto } from './dto';
+import { RolesGuard } from '../common/guards/roles.guard';
 @Controller('admin')
+@UseGuards(AuthGuard, RolesGuard)
 export class AdminController {
   @Post()
   create(@Body() createAdminDto: CreateAdminDto, @Res() res: Response) {
@@ -26,6 +30,7 @@ export class AdminController {
   }
   @Get(':id')
   findOne(@Param('id') id: string, @Res() res: Response) {
+    console.log('This is Controller');
     res.status(HttpStatus.OK).json({ id });
   }
 
