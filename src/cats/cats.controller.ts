@@ -16,6 +16,7 @@ import {
   ForbiddenException,
   ParseUUIDPipe,
   ParseIntPipe,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CatsService } from './cats.service';
@@ -23,7 +24,9 @@ import { CreateCatDto, getCatBodyMiddleware } from './dto/dto';
 import { Cat } from './interfaces/cats.interface';
 import { HttpExceptionFilter } from '../common/exections/http-exception.filter';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
+import { TransformInterceptor } from 'src/common/interceptors/transform.interceptor';
 @Controller('cats')
+@UseInterceptors(new TransformInterceptor())
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
