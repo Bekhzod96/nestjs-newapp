@@ -23,4 +23,8 @@ export class CatsService {
       ? `This id was inquered ${inquiredCat.name}`
       : 'Cat with this id not Found!';
   }
+
+  getValueInt(id: number) {
+    return `As a params recived number ${id}`;
+  }
 }

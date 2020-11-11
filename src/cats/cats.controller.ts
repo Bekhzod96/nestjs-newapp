@@ -15,20 +15,23 @@ import {
   UseFilters,
   ForbiddenException,
   ParseUUIDPipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CatsService } from './cats.service';
 import { CreateCatDto, getCatBodyMiddleware } from './dto/dto';
 import { Cat } from './interfaces/cats.interface';
 import { HttpExceptionFilter } from '../common/http-exception.filter';
+import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 @Controller('cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Post()
-  async create(@Body() createCatDto: CreateCatDto) {
+  async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
   }
+
   @Get()
   async findAll(
     @Query() query: string,
@@ -38,15 +41,20 @@ export class CatsController {
     console.info('This message added to controller ', bodySting);
     return this.catsService.findAll(query);
   }
+  // @Get(':id')
+  // findOne(
+  //   @Param(
+  //     'id',
+  //     new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+  //   )
+  //   id: string,
+  // ) {
+  //   return this.catsService.findOne(id);
+  // }
+
   @Get(':id')
-  findOne(
-    @Param(
-      'id',
-      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-    )
-    id: string,
-  ) {
-    return this.catsService.findOne(id);
+  getValueInt(@Param('id', new ParseIntPipe()) id) {
+    return this.catsService.getValueInt(id);
   }
 
   @Get('err')

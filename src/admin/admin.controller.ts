@@ -9,6 +9,7 @@ import {
   Delete,
   Res,
   HttpStatus,
+  UsePipes,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { CreateAdminDto, updateAdminDto } from './dto';
