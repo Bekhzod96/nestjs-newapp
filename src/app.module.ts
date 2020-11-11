@@ -20,10 +20,10 @@ import { AllExceptionsFilter } from './common/all-expection.filter';
   providers: [
     AppService,
     CatsService,
-    {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: AllExceptionsFilter,
+    // },
   ],
 })
 export class AppModule implements NestModule {

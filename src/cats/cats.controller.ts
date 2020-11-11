@@ -14,6 +14,7 @@ import {
   HttpStatus,
   UseFilters,
   ForbiddenException,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CatsService } from './cats.service';
@@ -36,6 +37,16 @@ export class CatsController {
     const bodySting = JSON.stringify(body);
     console.info('This message added to controller ', bodySting);
     return this.catsService.findAll(query);
+  }
+  @Get(':id')
+  findOne(
+    @Param(
+      'id',
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
+    return this.catsService.findOne(id);
   }
 
   @Get('err')
