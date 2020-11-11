@@ -8,18 +8,33 @@ import {
   Redirect,
   Query,
   Param,
+  Body,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { CatsService } from './cats.service';
+import { CreateCatDto } from './dto';
+import { Cat } from './cats.interface';
 @Controller('cats')
 export class CatsController {
+  constructor(private catsService: CatsService) {}
+
   @Post()
-  @HttpCode(204)
-  @Header('Cache-Control', 'none')
-  create(@Req() req: Request): string {
-    const body = JSON.stringify(req.body);
-    console.log(body);
-    return `This is in req body ${body}`;
+  async create(@Body() createCatDto: CreateCatDto) {
+    this.catsService.create(createCatDto);
   }
+  @Get()
+  async findAll(@Query() query: string): Promise<Cat[]> {
+    return this.catsService.findAll(query);
+  }
+
+  // @Post()
+  // @HttpCode(204)
+  // @Header('Cache-Control', 'none')
+  // create(@Req() req: Request): string {
+  //   const body = JSON.stringify(req.body);
+  //   console.log(body);
+  //   return `This is in req body ${body}`;
+  // }
 
   // @Get()
   // sendArspons(@Req() req: Request): string {
@@ -34,10 +49,4 @@ export class CatsController {
   //     return { url: 'https://docs.nestjs.com/v5/' };
   //   }
   // }
-
-  @Get('doc/:id')
-  findOne(@Param('id') id): string {
-    console.log(id);
-    return `This action returns a #${id} cat`;
-  }
 }
