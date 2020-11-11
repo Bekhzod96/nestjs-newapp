@@ -9,11 +9,17 @@ import {
   Query,
   Param,
   Body,
+  HttpException,
+  HttpService,
+  HttpStatus,
+  UseFilters,
+  ForbiddenException,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CatsService } from './cats.service';
 import { CreateCatDto, getCatBodyMiddleware } from './dto/dto';
 import { Cat } from './interfaces/cats.interface';
+import { HttpExceptionFilter } from '../common/http-exception.filter';
 @Controller('cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
@@ -30,6 +36,23 @@ export class CatsController {
     const bodySting = JSON.stringify(body);
     console.info('This message added to controller ', bodySting);
     return this.catsService.findAll(query);
+  }
+
+  @Get('err')
+  async sendError() {
+    throw new HttpException(
+      {
+        status: 'Aunotorized route access',
+        error: "You don't have a permission to access this route",
+      },
+      HttpStatus.FORBIDDEN,
+    );
+  }
+
+  @Post('exception')
+  @UseFilters(HttpExceptionFilter)
+  async createExeption(@Body() crateCatDto: CreateCatDto) {
+    throw new ForbiddenException();
   }
 
   // @Post()
