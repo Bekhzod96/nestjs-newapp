@@ -21,7 +21,7 @@ import { Request } from 'express';
 import { CatsService } from './cats.service';
 import { CreateCatDto, getCatBodyMiddleware } from './dto/dto';
 import { Cat } from './interfaces/cats.interface';
-import { HttpExceptionFilter } from '../common/http-exception.filter';
+import { HttpExceptionFilter } from '../common/exections/http-exception.filter';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 @Controller('cats')
 export class CatsController {

@@ -12,7 +12,7 @@ import { CatsService } from './cats/cats.service';
 import { CatsModule } from './cats/cats.module';
 import { logger } from './common/middleware/logger.middleware';
 import { APP_FILTER } from '@nestjs/core';
-import { AllExceptionsFilter } from './common/all-expection.filter';
+import { AllExceptionsFilter } from './common/exections/all-expection.filter';
 
 @Module({
   imports: [CatsModule],
