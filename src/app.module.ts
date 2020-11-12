@@ -13,9 +13,11 @@ import { CatsModule } from './cats/cats.module';
 import { logger } from './common/middleware/logger.middleware';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './common/exections/all-expection.filter';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [CatsModule],
+  imports: [CatsModule, AuthModule, UsersModule],
   controllers: [AppController, CatsController, AdminController],
   providers: [
     AppService,
