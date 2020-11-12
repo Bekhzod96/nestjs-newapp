@@ -17,14 +17,15 @@ import {
   ParseUUIDPipe,
   ParseIntPipe,
   UseInterceptors,
+  Res,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { CatsService } from './cats.service';
 import { CreateCatDto, getCatBodyMiddleware } from './dto/dto';
 import { Cat } from './interfaces/cats.interface';
 import { HttpExceptionFilter } from '../common/exections/http-exception.filter';
-import { ValidationPipe } from 'src/common/pipes/validation.pipe';
-import { TransformInterceptor } from 'src/common/interceptors/transform.interceptor';
+import { ValidationPipe } from '../common/pipes/validation.pipe';
+import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
 @Controller('cats')
 @UseInterceptors(new TransformInterceptor())
 export class CatsController {
@@ -32,7 +33,7 @@ export class CatsController {
 
   @Post()
   async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
-    this.catsService.create(createCatDto);
+    return this.catsService.create(createCatDto);
   }
 
   @Get()

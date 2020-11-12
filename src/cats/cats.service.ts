@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Cat } from './interfaces/cats.interface';
 import { v4 as uuid } from 'uuid';
+import { Response } from 'express';
 
 @Injectable()
 export class CatsService {
@@ -10,9 +11,13 @@ export class CatsService {
     console.log(cat);
     const id: string = uuid();
     this.cats.push({ ...cat, id });
+    return 'Created Successfully';
   }
 
-  findAll(query: string): Cat[] {
+  returnString() {
+    return 'Hey';
+  }
+  findAll(query: string) {
     console.log(query);
     return this.cats;
   }

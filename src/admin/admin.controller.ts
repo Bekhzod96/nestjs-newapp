@@ -17,7 +17,7 @@ import {
 import { Response } from 'express';
 import { CreateAdminDto, updateAdminDto } from './dto';
 import { RolesGuard } from '../common/guards/roles.guard';
-import { LoggingInterceptor } from 'src/common/interceptors/logging.interceptor';
+import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
 @Controller('admin')
 @UseGuards(RolesGuard)
 @UseInterceptors(LoggingInterceptor)

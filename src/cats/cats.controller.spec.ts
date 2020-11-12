@@ -1,18 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CatsController } from './cats.controller';
+import { CatsService } from './cats.service';
 
 describe('CatsController', () => {
-  let controller: CatsController;
+  let catsController: CatsController;
+  let catsService: CatsService;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [CatsController],
-    }).compile();
-
-    controller = module.get<CatsController>(CatsController);
+  beforeEach(() => {
+    catsService = new CatsService();
+    catsController = new CatsController(catsService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('findAll', () => {
+    it('should return string', async () => {
+      expect(await catsService.returnString()).toBe('Hey');
+    });
   });
 });

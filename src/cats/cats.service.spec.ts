@@ -15,4 +15,9 @@ describe('CatsService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should create and send back json', () => {
+    const createJSON = { name: 'Tom', age: 24, breed: 'buildog' };
+    expect(service.create(createJSON)).toBe('Created Successfully');
+  });
 });
